@@ -28,7 +28,7 @@ Limitations
 Copyright & Ownership
 © 2026 @CIENGR. All Rights Reserved.
 
-Meow Client is an adaptation based on the supplied SK1D CLIENTTOOL / MEOW source materials. All original source code, interface designs, custom systems, and project-specific assets remain the intellectual property of their respective original owners. This adaptation does not transfer ownership of those materials to the adapter.
+Meow Client is an adaptation based on the supplied MEOW TOOLS and MEOW CLIENT source materials ONLY. All original source code, interface designs, custom systems, and project-specific assets remain the intellectual property of their respective original owners. This adaptation does not transfer ownership of those materials to the adapter.
 
 Ownership and attribution must be respected.
 Terms of Use
