@@ -1,10 +1,3 @@
--- Meow Client single-file LocalScript build.
--- Based on the user-supplied MEOW bundle; original project credit/ownership remains with @CIENGR.
--- This local adaptation is for Roblox Studio use; obtain permission before publishing modified MEOW materials.
-
--- Combined MEOW Client Framework (Single-File Bundle)
--- Includes: KeybindManager, SettingsManager, NotificationManager, ModuleManager, HUD, Visuals, AdvancedSuite
-
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
@@ -15,9 +8,7 @@ local Lighting = game:GetService("Lighting")
 local CollectionService = game:GetService("CollectionService")
 local Workspace = game:GetService("Workspace")
 
--- ============================================================================
--- 1. KeybindManager
--- ============================================================================
+
 local KeybindManager = {}
 KeybindManager.__index = KeybindManager
 
@@ -77,9 +68,7 @@ function KeybindManager:Destroy()
 	table.clear(self.Bindings)
 end
 
--- ============================================================================
--- 2. SettingsManager
--- ============================================================================
+
 local SettingsManager = {}
 SettingsManager.__index = SettingsManager
 
@@ -109,7 +98,7 @@ function SettingsManager:Import(jsonText)
 	assert(type(jsonText) == "string" and #jsonText <= 100000, "Invalid configuration size")
 	local decoded = HttpService:JSONDecode(jsonText)
 	assert(type(decoded) == "table", "Configuration must be an object")
-	-- Only accept JSON-compatible primitive values and shallow tables.
+
 	local clean = {}
 	for key, value in pairs(decoded) do
 		if type(key) == "string" and #key <= 80 then
@@ -141,9 +130,7 @@ function SettingsManager:Destroy()
 	table.clear(self.Values)
 end
 
--- ============================================================================
--- 3. NotificationManager
--- ============================================================================
+
 local NotificationManager = {}
 NotificationManager.__index = NotificationManager
 
@@ -198,9 +185,7 @@ function NotificationManager:Push(kind, message)
 	end)
 end
 
--- ============================================================================
--- 4. ModuleManager
--- ============================================================================
+
 local ModuleManager = {}
 ModuleManager.__index = ModuleManager
 
@@ -284,9 +269,7 @@ function ModuleManager:Shutdown()
 	end
 end
 
--- ============================================================================
--- 5. HUD
--- ============================================================================
+
 local HUD = {}
 
 function HUD.Register(manager, screenGui)
@@ -351,9 +334,7 @@ function HUD.Register(manager, screenGui)
 	})
 end
 
--- ============================================================================
--- 6. Visuals
--- ============================================================================
+
 local Visuals = {}
 
 local function registerVisuals(manager)
@@ -456,9 +437,7 @@ end
 
 Visuals.Register = registerVisuals
 
--- ============================================================================
--- 7. AdvancedSuite
--- ============================================================================
+
 local AdvancedSuite = {}
 
 local C = {
@@ -616,7 +595,7 @@ function AdvancedSuite.Mount(context)
 		b.ZIndex = 32
 	end
 
-	-- COSMETICS + 3D AVATAR PREVIEW
+
 	local cosmetics = newPage("Cosmetics")
 	local viewport = make("ViewportFrame", {
 		Position = UDim2.fromOffset(0, 0),
@@ -869,7 +848,7 @@ function AdvancedSuite.Mount(context)
 	end, false)
 	local hudHint = label(hudPage, "Select and drag a widget. Use its bottom-right handle to resize. Layout is session-local in this client build.", UDim2.new(1, 0, 0, 16), UDim2.new(0, 0, 1, -16), 8, C.Muted)
 
-	-- EMOTE WHEEL: hold G to show; choose an available built-in emote.
+
 	local emotePage = newPage("Emote Wheel")
 	local emoteWheel = make("Frame", { AnchorPoint = Vector2.new(0.5, 0.5), Position = UDim2.fromScale(0.5, 0.49), Size = UDim2.fromOffset(340, 340), BackgroundColor3 = C.Panel, BorderSizePixel = 0, ZIndex = 34 }, emotePage)
 	round(emoteWheel, 170); outline(emoteWheel, C.RedDark)
@@ -931,7 +910,7 @@ function AdvancedSuite.Mount(context)
 	table.insert(connections, emoteInputBegan)
 	table.insert(connections, emoteInputEnded)
 
-	-- PERFORMANCE MONITOR + LIVE GRAPHS
+	
 	local performance = newPage("Performance")
 	local metricCards = make("Frame", { Size = UDim2.new(1, 0, 0, 74), BackgroundTransparency = 1, ZIndex = 33 }, performance)
 	local function metricCard(x, title)
@@ -1036,9 +1015,7 @@ function AdvancedSuite.Mount(context)
 	return module
 end
 
--- ============================================================================
--- Exported Bundle Table
--- ============================================================================
+
 local Bundle = {
 	KeybindManager = KeybindManager,
 	SettingsManager = SettingsManager,
@@ -1049,11 +1026,7 @@ local Bundle = {
 	AdvancedSuite = AdvancedSuite,
 }
 
--- ============================================================================
--- MEOW CLIENT STARTUP / LOCAL UI
--- Install as a LocalScript in StarterPlayer > StarterPlayerScripts.
--- Standard Roblox APIs only; no executor APIs, remote code loaders, or injection.
--- ============================================================================
+
 
 local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
@@ -1168,8 +1141,7 @@ local keybindManager = Bundle.KeybindManager.new()
 Bundle.Visuals.Register(moduleManager)
 Bundle.HUD.Register(moduleManager, screenGui)
 
--- The full suite intentionally highlights only tagged test models in an experience
--- you control. Add the CollectionService tag "MEOW_VisualTarget" to test dummies.
+
 local advancedSuite = Bundle.AdvancedSuite.Mount({
     Player = player,
     PlayerGui = playerGui,
@@ -1248,14 +1220,14 @@ local advancedButton = button(topbar, "ADVANCED  ↗", UDim2.fromOffset(98, 28),
     advancedSuite:Open()
 end, true)
 local minimizeButton = button(topbar, "—", UDim2.fromOffset(28, 28), UDim2.new(1, -119, 0, 14), function()
-    -- The click handler below performs the collapse/restore.
+    
 end, false)
 local closeButton = button(topbar, "×", UDim2.fromOffset(28, 28), UDim2.new(1, -82, 0, 14), function()
     window.Visible = false
     notify("info", "Meow Client hidden. Use RightShift or the floating M button to reopen it.")
 end, true)
 
--- A small floating reopen button remains available when the main window is hidden.
+
 local bubble
 bubble = button(screenGui, "M", UDim2.fromOffset(44, 44), UDim2.new(1, -60, 0.5, 0), function()
     window.Visible = true
@@ -1647,7 +1619,7 @@ searchBox:GetPropertyChangedSignal("Text"):Connect(function()
     renderCards()
 end)
 
--- Settings page content and editable keybinds.
+
 local settingsNote = label(content, "KEYBINDS", UDim2.new(1, -50, 0, 18), UDim2.fromOffset(22, 114), 9, Palette.Muted, Enum.Font.GothamBold)
 settingsNote.Visible = false
 menuKeyButton = button(content, "MENU KEY  ·  RIGHTSHIFT", UDim2.fromOffset(190, 30), UDim2.fromOffset(22, 141), function()
@@ -1722,7 +1694,7 @@ keybindManager.Changed.Event:Connect(function(action, id, keyCode)
     end
 end)
 
--- Keep the UI movable with mouse or touch.
+
 local dragging = false
 local dragInput
 local dragStart
@@ -1770,7 +1742,7 @@ closeButton.Activated:Connect(function()
     bubble.Visible = true
 end)
 
--- A cleanup button is exposed in the Settings category.
+
 local unloadButton = button(content, "UNLOAD MEOW CLIENT", UDim2.fromOffset(190, 30), UDim2.fromOffset(22, 218), function()
     moduleManager:Shutdown()
     advancedSuite:Destroy()
@@ -1778,7 +1750,7 @@ local unloadButton = button(content, "UNLOAD MEOW CLIENT", UDim2.fromOffset(190,
     settingsManager:Destroy()
     screenGui:Destroy()
     if notifications then
-        -- Notification frames are children of the screen being destroyed.
+     
     end
 end, true)
 unloadButton.Visible = false
@@ -1788,9 +1760,7 @@ renderCards = function()
     unloadButton.Visible = selectedCategory == "Settings"
 end
 
--- Numeric settings fields are generated in a small movable panel.
--- Clicking the ellipsis shows a JSON-safe summary; the config panel itself supports
--- complete import/export and known setting types. Values are clamped by feature code.
+
 
 switchCategory("Visuals")
 refreshActiveCount()
