@@ -1,0 +1,21 @@
+{
+  "name": "SK1D_CLIENTOOL",
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {
+      "$className": "ReplicatedStorage",
+      "SK1D": {
+        "$path": "src/ReplicatedStorage/SK1D"
+      }
+    },
+    "StarterPlayer": {
+      "$className": "StarterPlayer",
+      "StarterPlayerScripts": {
+        "$className": "StarterPlayerScripts",
+        "SK1DClient": {
+          "$path": "src/StarterPlayer/StarterPlayerScripts/SK1DClient.client.lua"
+        }
+      }
+    }
+  }
+}
